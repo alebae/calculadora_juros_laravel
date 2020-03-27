@@ -17,6 +17,7 @@ class CreateSimulacaosTable extends Migration
             $table->id();
             $table->decimal('tx_juros', 3, 2);
             $table->decimal('valor_parcela', 10, 2);
+            $table->decimal('valor_total', 10, 2);
             $table->tinyInteger('tipo_juros');
             $table->tinyInteger('qtde_parcelas');
             $table->timestamps();
