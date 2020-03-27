@@ -25,7 +25,13 @@ class SimulacaoController extends Controller
      */
     public function store(Request $request)
     {
-        Simulacao::create($request->all());
+     
+        if(!validateJson($request->all())){
+            return response()->json(['erro' => 'Erro! Você não preencheu os campos corretamente!'], 500);
+        } else {
+            Simulacao::create($request->all());
+            return response()->json(['msg' => 'Simulação inserida com sucesso!'], 201);
+        }        
     }
 
     /**
