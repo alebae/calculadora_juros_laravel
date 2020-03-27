@@ -25,11 +25,11 @@ class SimulacaoController extends Controller
      */
     public function store(Request $request)
     {
-     
         if(!validateJson($request->all())){
             return response()->json(['erro' => 'Erro! Você não preencheu os campos corretamente!'], 500);
         } else {
-            Simulacao::create($request->all());
+            $simulacao = Simulacao::create($request->all());
+            $this->calculateInterest($request->all(), $simulacao->id);
             return response()->json(['msg' => 'Simulação inserida com sucesso!'], 201);
         }        
     }
@@ -73,5 +73,25 @@ class SimulacaoController extends Controller
     {
         $simulacao = Simulacao::findOrFail($id);
         $simulacao->delete($simulacao);
+    }
+
+    public function calculateInterest($data, $id){
+        $simulacao = Simulacao::findOrFail($id);
+        $data['valor_parcela'] = $this->calculateInterestAction($data);
+        $simulacao->update($data);
+    }
+
+    public function calculateInterestAction($data){
+        if($data['tipo_juros']==1){
+            $value = jurosSimples($data['valor_total'], 
+                         $data['tx_juros'], 
+                         $data['qtde_parcelas']);
+        } else {
+            $value = jurosComposto($data['valor_total'], 
+                         $data['tx_juros'], 
+                         $data['qtde_parcelas']);
+        }
+
+        return $value;
     }
 }

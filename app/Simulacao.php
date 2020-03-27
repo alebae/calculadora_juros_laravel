@@ -12,6 +12,8 @@ class Simulacao extends Model
      * @var array
      */
     protected $fillable = [
-        'tx_juros', 'valor_parcela', 'tipo_juros', 'qtde_parcelas',
+        'tx_juros', 'valor_total', 'valor_parcela', 'tipo_juros', 'qtde_parcelas',
     ];
+
+    
 }
