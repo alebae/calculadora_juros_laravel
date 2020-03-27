@@ -55,7 +55,12 @@ class SimulacaoController extends Controller
     public function update(Request $request, $id)
     {
         $simulacao = Simulacao::findOrFail($id);
-        $simulacao->update($request->all());
+        if(!validateJson($request->all())){
+            return response()->json(['erro' => 'Erro! Você não preencheu os campos corretamente!'], 500);
+        } else {
+            $simulacao->update($request->all());
+            return response()->json(['msg' => 'Simulação alterada com sucesso!'], 201);
+        }        
     }
 
     /**
