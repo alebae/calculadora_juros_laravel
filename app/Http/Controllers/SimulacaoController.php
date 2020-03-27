@@ -25,7 +25,7 @@ class SimulacaoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Simulacao::create($request->all());
     }
 
     /**
@@ -36,7 +36,7 @@ class SimulacaoController extends Controller
      */
     public function show($id)
     {
-        //
+        return Simulacao::findOrFail($id);
     }
 
     /**
@@ -48,7 +48,8 @@ class SimulacaoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $simulacao = Simulacao::findOrFail($id);
+        $simulacao->update($request->all());
     }
 
     /**
@@ -59,6 +60,7 @@ class SimulacaoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $simulacao = Simulacao::findOrFail($id);
+        $simulacao->delete($simulacao);
     }
 }
